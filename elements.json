@@ -1,7 +1,7 @@
 {
 "t1": {
-"title": "Emuladores",
-"subtitle": "Emuladores optimizados",
+"title": "Emulators",
+"subtitle": "Optimized emulators",
 "e1": {
 "name": "Citra",
 "l1": "https://www.mediafire.com/file/u03w1u1rxgya2jt"
@@ -50,8 +50,8 @@
 }
 },
 "t2": {
-"title": "Juegos",
-"subtitle": "Juegos optimizados",
+"title": "Games",
+"subtitle": "Optimized games",
 "e1": {
 "name": "Bad Piggies",
 "l1": "https://cdn.discordapp.com/attachments/1065489877497548861/1177785781545353267/Bad_Piggies.7z"
@@ -94,7 +94,7 @@
 "name": "Friday Night Funkin",
 "l1": "https://github.com/OptiJuegos/Friday-Night-Funkin-Lite/releases/download/v1.1/Friday.Night.Funkin.Lite.zip",
 "l2": "https://optijuegos.github.io/Friday-Night-Funkin-Lite/",
-"b1": "Descargar",
+"b1": "Download",
 "b2": "Web"
 },
 "e10": {
@@ -172,7 +172,7 @@
 "name": "Subway Surfers",
 "l1": "https://cdn.discordapp.com/attachments/1065489877497548861/1167666961245798420/Subway_Surfers.7z",
 "l2": "https://optijuegos.github.io/subway-surfers-web/",
-"b1": "Descargar",
+"b1": "Download",
 "b2": "Web"
 },
 "e28": {
@@ -198,7 +198,7 @@
 },
 "t3": {
 "title": "OptiCraft",
-"subtitle": "Versiones",
+"subtitle": "Versions",
  "e1": {
 "name": "OptiCraft 1.7",
 "l1": "https://www.mediafire.com/file/wuot9zxm5u35saa/OptiCraft_1.7.3.1_By_OptiJuegos.7z/file",
@@ -263,8 +263,8 @@
 }
 },
 "t4": {
-"title": "Programas",
-"subtitle": "Programas optimizados",
+"title": "Programs",
+"subtitle": "Optimized programs",
 "e1": {
 "name": "Bandicam Portable",
 "l1": "https://www.mediafire.com/file/eu3gfmfvtfardzj/"
@@ -290,7 +290,7 @@
 "l1": "https://cdn.discordapp.com/attachments/1069748073955348550/1079130749350981692/Game_Booster.zip"
 },
 "e7": {
-"name": "Instalador Visual C++ - DirectX",
+"name": "Installer Visual C++ - DirectX",
 "l1": "https://www.mediafire.com/file/2bjxzf59duumsr5/"
 },
 "e8": {
@@ -306,7 +306,7 @@
 "l1": "https://cdn.discordapp.com/attachments/1069748073955348550/1165862996849999922/LighterOBS_No_Browser_By_OptiJuegos.7z"			
 },
 "e11": {
-"name": "Limpiar Espacio",
+"name": "Limpiar Espacio (Clean Space)",
 "l1": "https://www.mediafire.com/file/h8w0ismnrpwm8oe"			
 },
 "e12": {
@@ -363,8 +363,8 @@
 }
 },
 "t5": {
-"title": "Sistemas",
-"subtitle": "Sistemas optimizados",
+"title": "Systems",
+"subtitle": "Optimized systems",
 "e1": {
 "name": "OptiOS 7 X86 (Windows 7)",
 "l1": "https://www.mediafire.com/file/addcfxkfoqonj4b/"
