@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>OptiUploads</title>
+    <meta property="og:title" content="OptiUploads">
+    <meta property="og:description" content="Subir archivos de hasta 15GB. Un front-end alternativo de Fileditch con bastantes mejoras.">
+    <meta name="description" content="Subir archivos de hasta 15GB. Un front-end alternativo de Fileditch con bastantes mejoras.">
+    <meta property="og:url" content="https://optijuegos.github.io">
+    <meta property="theme-color" content="#00BAB3">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAV1BMVEVHcEz////////////////////////////////////////////////////////////////1+vrl8vLX6+rH5OG53tuPzcip19N3xcBZvrcAs6s9ubERtKxo6iZNAAAAGnRSTlMACRUoNURTYXaJm6/A0eDt9fb3+Pn6/Pz9/kQEJJAAAAFDSURBVHjalVIFgoAwDMMdlg2b/f+dyPz8glNN2uzvKNthnKZp7NvqK3MzI2CuP9kHgO0HF0LwY2fAkH+000Ma6Ps6KaYithegQsYQDFOco8YmUyiGPnJosdv/57bt/M1BUX524BQPzud9xxAcOpzWPrZNR3A8ySgJfY7g7y90Jh973Dd0EYmXHEbzPb/+HJNX0ZBgqG1F0xKFYzq8RQUWNxWsj8MKp/gM9VQIzAmV74/OtcBcQBJxOKIV1rRkNtkux7hHjSXQ9g5Bx98dJCVZ6EHYHlIZSq8LS1iUYMl0ygVHSmuBMqMYq5t0R0xGAeKV9MMEIQB2bRJ44SpQZdaFAWzj0gxzLqKdXZVMsWOJNiqfwURiP0GqZK0n0D0k4StInSXIewDreXB+nBsDZhcfUA4EDnPrCKZZqm4Yx6Fviuw/uAAyCiv4SVO6xgAAAABJRU5ErkJggg==">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600&display=swap" rel="stylesheet" id="fontStylesheet" disabled>
+</head>
+<body>
+    <div class="box" id="serverInfo">
+        <div id="serverText" style="padding: 13px 0px 13px; height: calc(100% - 26px); width: calc(100% + 64px); overflow-y: scroll;">
+            <span style="font-size: 22px"><b>Funciones:</b></span>
+            <br><br>
+            - Drag and drop para subir<br>
+            - Botón para seleccionar archivo<br>
+            - Copiar link del archivo<br>
+            - Lista guardada en cookies<br>
+            - Click del scroll para borrar
+
+            <br><br><br>
+
+            <span style="font-size: 22px"><b>Limitaciones:</b></span>
+            <br><br>
+            - Solo 1 archivo a la vez<br>
+            - Algunos formatos no soportados<br>
+            - Hasta 15GB por cada archivo<br>
+            <br><br>
+            > Ratelimit desconocido
+
+            <br><br><br>
+
+            <span style="font-size: 22px"><b>Formatos no soportados:</b></span>
+            <br><br>
+            - exe<br>
+            - dll<br>
+            - bat<br>
+            - html
+            <br><br>
+            - Posiblemente más<br>
+        </div>
+    </div>
+
+    <div class="box loading" id="loading" style="display: flex;">Ejecutando JavaScript...</div>
+
+    <div id="mainContainer" style="display: none;">
+        <div class="box" id="mainBox">
+            <img id="listIcon" class="icon" draggable=false src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgaWQ9IkZyYW1lIj4KPHBhdGggaWQ9IlZlY3RvciIgZD0iTTggNkgyMSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPHBhdGggaWQ9IlZlY3Rvcl8yIiBkPSJNOCAxMkgyMSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPHBhdGggaWQ9IlZlY3Rvcl8zIiBkPSJNOCAxOEgyMSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPHBhdGggaWQ9IlZlY3Rvcl80IiBkPSJNMyA2SDMuMDEiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxwYXRoIGlkPSJWZWN0b3JfNSIgZD0iTTMgMTJIMy4wMSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPHBhdGggaWQ9IlZlY3Rvcl82IiBkPSJNMyAxOEgzLjAxIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L2c+Cjwvc3ZnPgo=" alt="Ícono de lista">
+            <span class="boxLabel" id="tabSubtitle">Archivos subidos</span>
+            <div class="box listBox" id="listBox" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave()">
+                <div class="entryContainer" id="entryContainer"></div>
+            </div>
+        </div>
+
+        <div class="box downloadBox">
+            <img class="icon" draggable=false src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS10ZXh0Ij48cGF0aCBkPSJNMTcgNi4xSDMiLz48cGF0aCBkPSJNMjEgMTIuMUgzIi8+PHBhdGggZD0iTTE1LjEgMThIMyIvPjwvc3ZnPg==" alt="Ícono de acciones">
+            <span class="boxLabel">Acciones</span>
+            <a class="downloadButton info" draggable="false" id="info" onclick="uploadFile()" title="Seleccionar archivo para subir"></a>
+            <a class="downloadButton download2" draggable=false id="download2" title="Copiar link al portapapeles">Copiar</a>
+            <a class="downloadButton download1" draggable=false id="download1" href="">Descargar</a>
+        </div>
+    </div>
+
+    <input type="file" id="fileInput" style="display: none;" onchange="handleFileSelect()">
+<style>
+body {
+    background-color: #000;
+    background-image: url(data:image/webp;base64,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);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 100vh;
+    margin: 0;
+    font-family: Inter;
+    font-weight: 500;
+    line-height: normal;
+    user-select: none;
+    overflow: hidden;
+}
+
+#mainContainer {
+    width: 440px;
+    height: 575px;
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    transform: translateY(-50%) translateX(-50%);
+}
+
+.box {
+    background-color: #14141480;
+    width: 440px;
+    position: absolute;
+    border-radius: 8px;
+    box-shadow: inset 0 0 0 2px #00000040;
+}
+.icon {
+    padding-top: 16px;
+    padding-left: 16px;
+}
+.boxLabel {
+    color: #FFF;
+    text-align: center;
+    padding-top: 17.5px;
+    padding-left: 10px;
+    font-size: 17px;
+    position: absolute;
+    display: inline-block;
+}
+
+#mainBox {
+    height: 451px;
+    box-shadow: inset 0 0 0 2px #00000040, 0px 0px 16px 4px #00000033;
+}
+
+.listEntry {
+    background-color: #00000000;
+    width: 379px;
+    height: 24px;
+    margin: 7px 0px 0px 11px;
+    padding-top: 4px;
+    padding-left: 7px;
+    border-radius: 4px;
+    color: #FFF;
+    font-size: 16px;
+    display: block;
+    outline: 0px solid #FFFFFF2B;
+}
+.listEntry:hover {
+    background-color: #45454520;
+}
+.listEntry:active {
+    animation: outlineAnimation 0.15s forwards;
+}
+@keyframes outlineAnimation {
+    0% {
+        outline: 0px solid #FFFFFF2B;
+    }
+    75% {
+        outline: 0px solid #FFFFFF2B;
+    }
+    100% {
+        outline: 2px solid #FFFFFF2B;
+    }
+}
+
+
+
+.listBox {
+    width: 408px;
+    height: 381px;
+    margin: 16px;
+    margin-top: 10px;
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 96px;
+}
+/* This is separated so that the styles don't get overrided by the transparent scrollbar */
+.entryContainer {
+    width: 105%;
+    height: calc(100% - 15px);
+    margin-top: 2px;
+    padding-top: 2px;
+    padding-bottom: 9px;
+    overflow: auto;
+    scrollbar-color: transparent transparent;
+}
+#entryContainer::-webkit-scrollbar {
+    width: 0px;
+}
+
+.downloadBox {
+    height: 108px;
+    bottom: 0px;
+    box-shadow: inset 0 0 0 2px #00000040, 0px 0px 16px 4px #00000033;
+}
+
+.downloadButton {
+    color: #FFF;
+    bottom: 0px;
+    width: 170px;
+    height: 36px;
+    margin: 16px;
+    position: absolute;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: Inter;
+    font-weight: 500;
+    font-size: 17px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: width 0.1s ease, background-color 0.05s ease, opacity 0.2s ease, outline 0.05s ease;
+}
+
+.download1 {
+    background-color: #00847E;
+    right: 0px;
+    outline: 0px solid #00847E;
+}
+.download1:hover {
+    background-color: #00847E90;
+}
+.download1:active {
+    background-color: #00847E50;
+    outline: 3px solid #00847E;
+}
+
+.download2 {
+    background-color: #2F4342;
+    left: 52px;
+    outline: 0px solid #2F4342;
+}
+.download2:hover {
+    background-color: #2F434290;
+}
+.download2:active {
+    background-color: #2F434250;
+    outline: 3px solid #2F4342;
+}
+
+.info {
+    background-color: #FFFFFF0D;
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgaWQ9IkZyYW1lIj4KPHBhdGggaWQ9IlZlY3RvciIgZD0iTTEyIDVWMTkiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxwYXRoIGlkPSJWZWN0b3JfMiIgZD0iTTE5IDEyTDEyIDE5TDUgMTIiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjwvZz4KPC9zdmc+Cg==);
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 36px;
+    left: 0px;
+    outline: 0px solid #FFFFFF0D;
+    transition: 0.2s ease, outline 0.05s ease;
+    transform: rotate(180deg);
+}
+.info:hover {
+    background-color: #FFFFFF13;
+}
+.info:active {
+    background-color: #FFFFFF1A;
+    outline: 3px solid #FFFFFF0D;
+}
+
+
+
+.loading {
+    color: #FFF;
+    width: auto;
+    height: auto;
+    padding: 17px;
+    padding-top: 13px;
+    padding-bottom: 11px;
+    bottom: 16px;
+    right: 16px;
+    position: absolute;
+    font-size: 17px;
+    font-weight: 500;
+    line-height: 1.75;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: inset 0 0 0 2px #00000040, 0px 0px 16px 4px #00000033;
+    transition: 1s ease;
+}
+
+#serverInfo {
+    display: none;
+    color: #FFF;
+    position: absolute;
+    user-select: text;
+    bottom: 24px;
+    left: 24px;
+    padding: 2px 16px;
+    width: 270px;
+    height: 215px;
+    box-shadow: inset 0 0 0 2px #00000040, 0px 0px 16px 4px #00000033;
+    justify-content: center;
+    font-size: 16px;
+    scrollbar-color: transparent transparent;
+    overflow: hidden;
+}
+</style>
+    <script>document.getElementById("loading").innerHTML = "Ejecutando JavaScript...<br>Cargando assets..."
+document.getElementById("fontStylesheet").disabled = false
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("mainContainer").style.display = null
+    document.getElementById("serverInfo").style.display = "block"
+    document.getElementById("loading").style.display = "none"
+})
+
+
+switch (true) {
+    case document.cookie.slice(-2) == "==":
+        elementsData = JSON.parse(atob(document.cookie.slice(9, -2)))
+        break
+    case document.cookie.slice(-1) == "=":
+        elementsData = JSON.parse(atob(document.cookie.slice(9, -1)))
+        break
+    case document.cookie.slice(-1) !== "=":
+        if (document.cookie !== "") {
+            elementsData = JSON.parse(atob(document.cookie.slice(9)))
+            break
+        }
+    default:
+        elementsData = {}
+        break
+}
+
+
+entry = {}
+entry.selected = "e1"
+entry.amount = 0
+
+
+entry.amount = Object.keys(elementsData).length
+for (let i = 1; i <= entry.amount; i++) {
+    if (elementsData["e" + i] !== undefined) {
+        let newElement = document.createElement("span")
+        newElement.id = "e" + i
+        newElement.className = "listEntry"
+        newElement.innerHTML = elementsData["e" + i].name
+        document.getElementById("entryContainer").appendChild(newElement)
+    } else {
+        entry.amount++
+    }
+}
+
+
+selectEntry("e1")
+
+
+document.getElementById("entryContainer").addEventListener("mousedown", function(event) {
+    if (event.button === 0 && event.target.getAttribute("id") !== "entryContainer") {
+        selectEntry(event.target.getAttribute("id"))
+    }
+    if (event.button === 1 && event.target.getAttribute("id") !== "entryContainer") {
+        deleteEntry(event.target.getAttribute("id"))
+    }
+})
+document.getElementById("download2").addEventListener("click", function() {
+    if (elementsData[entry.selected] !== undefined) {
+        navigator.clipboard.writeText(elementsData[entry.selected].link)
+    } else {
+        navigator.clipboard.writeText("https://www.youtube.com/watch?v=eUUg7OCNRtc")
+    }
+})
+
+function selectEntry(id) {
+    if (document.getElementById(id) !== null) {
+        if (document.getElementById(entry.selected) !== null) {
+            document.getElementById(entry.selected).style = null
+        }
+        entry.selected = id
+        document.getElementById(entry.selected).style.backgroundColor = "#FFFFFF17"
+    } else {
+        for (let i = 1; i <= entry.amount; i++) {
+            if (document.getElementById("e" + i) !== null) {
+                if (document.getElementById(entry.selected) !== null) {
+                    document.getElementById(entry.selected).style = null
+                }
+                entry.selected = "e" + i
+                document.getElementById(entry.selected).style.backgroundColor = "#FFFFFF17"
+                i = entry.amount
+            }
+        }
+    }
+    updateButtons()
+}
+function deleteEntry(id) {
+    document.getElementById(id).remove()
+    delete elementsData[id]
+    if (id === entry.selected) {
+        selectEntry("e1")
+    }
+    saveCookie()
+}
+function updateButtons() {
+    if (elementsData[entry.selected] !== undefined) {
+        document.getElementById("download1").setAttribute("href", elementsData[entry.selected].link)
+    } else {
+        document.getElementById("download1").setAttribute("href", "https://www.youtube.com/watch?v=eUUg7OCNRtc")
+    }
+}
+
+function saveCookie() {
+    encodedCookie = btoa(JSON.stringify(elementsData))
+
+    currentTime = new Date()
+    let expirationDate = new Date(currentTime.getFullYear() + 3, currentTime.getMonth(), currentTime.getDate())
+    let expires = "expires=" + expirationDate.toUTCString()
+
+    document.cookie = "elements =" + encodedCookie + "; SameSite=Strict; " + expires
+}
+
+
+compactMode()
+window.addEventListener("resize", compactMode)
+function compactMode() {
+    if (window.innerHeight < 575) {
+        document.getElementById("mainContainer").style.height = window.innerHeight + "px"
+        document.getElementById("mainBox").style.height = window.innerHeight - 124 + "px"
+        document.getElementById("listBox").style.height = window.innerHeight - 194 + "px"
+    } else {
+        document.getElementById("mainContainer").style.height = null
+        document.getElementById("mainBox").style.height = null
+        document.getElementById("listBox").style.height = null
+    }
+
+    if (window.innerWidth < 1091) {
+        document.getElementById("serverInfo").style.opacity = "0.5"
+    } else {
+        document.getElementById("serverInfo").style.opacity = null
+    }
+}
+
+
+
+// ----------------- Uploading system ----------------- //
+
+// Handlers for hovering, dropping, etc - This functions are executed in the HTML
+function handleFileSelect() {
+    handleFile(document.getElementById("fileInput").files[0])
+}
+function handleDrop(event) {
+    event.preventDefault()
+    document.getElementById("listBox").style.backgroundImage = null
+    handleFile(event.dataTransfer.files[0])
+}
+function handleDragOver(event) {
+    event.preventDefault()
+    document.getElementById("listBox").style.backgroundImage = "url(https://optijuegos.github.io/assets/download.svg)"
+}
+function handleDragLeave() {
+    document.getElementById("listBox").style.backgroundImage = null
+}
+
+// Actually uploading the file
+function handleFile(file) {
+    document.getElementById("loading").style.display = null
+    document.getElementById("loading").innerHTML = "Subiendo archivo..."
+
+    reader = new FileReader()
+
+    reader.onload = function() {
+        const arrayBuffer = new Uint8Array(reader.result);
+
+        const formData = new FormData();
+        formData.append('files[]', new Blob([arrayBuffer]), file.name);
+
+    fetch("https://up1.fileditch.com/upload.php", {
+        method: "POST",
+        body: formData,
+    })
+    .then(response => response.json())
+    .then(data => {
+            if (data.success === true) {
+                document.getElementById("loading").style.display = "none"
+
+                // Creates the element
+                entry.amount += 1
+                let newElement = document.createElement("span")
+                newElement.id = "e" + entry.amount
+                newElement.className = "listEntry"
+                newElement.innerHTML = file.name
+                document.getElementById("entryContainer").appendChild(newElement)
+
+                // Adds it to the elements list object
+                elementsData["e" + entry.amount] = {
+                    name: file.name,
+                    link: data.files[0].url
+                }
+
+                selectEntry("e" + entry.amount)
+                saveCookie()
+            } else {
+                document.getElementById("loading").innerHTML = "Ocurrió un error subiendo el archivo.<br>Revisa que sea un formato soportado u otros errores."
+            }
+    })
+    }
+
+    reader.readAsArrayBuffer(file)
+}
+function uploadFile() {
+    document.getElementById("fileInput").click()
+}
+
+
+function ajnsdnjas() {
+    
+}</script>
+</body>
+</html>
