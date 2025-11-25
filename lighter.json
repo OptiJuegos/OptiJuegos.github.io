@@ -1,5 +1,6 @@
 {
-  "version": "9.1",
+  "version": "9.2",
   "cambios": "- Se corrigió la compatibilidad con GameHub\n- Ahora el juego contiene un actualizador",
   "changes": "- Fixed compatibility with GameHub\n- Added updater to the game"
 }
+
