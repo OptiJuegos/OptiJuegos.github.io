@@ -1,6 +1,7 @@
 {
-  "version": "BETA3",
+  "version": "BETA2",
   "cambios": "- prueba\n hola!",
   "changes": "- Improved rendering optimization\n- RAM usage reduced by 15%\n- Fixed shader bugs\n- Better mod compatibility\n- Updated graphics libraries"
 }
+
 
