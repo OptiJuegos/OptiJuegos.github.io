@@ -1,6 +1,6 @@
 {
-  "version": "1.1",
-  "cambios": "- Optimización mejorada de renderizado\n- Reducción de uso de RAM en un 15%\n- Corrección de bugs con shaders\n- Mejoras en compatibilidad con mods\n- Actualización de librerías gráficas",
-  "changes": "- Improved rendering optimization\n- RAM usage reduced by 15%\n- Fixed shader bugs\n- Better mod compatibility\n- Updated graphics libraries"
+  "version": "1.2",
+  "cambios": "- Se redujo el tamaño del juego de 15.3GB a 13.8GB\n- El crack fue actualizado y mejorado\n-Multiples texturas fueron comprimidas y optimizadas\n-Se incluyo la verificacion al iniciar el juego\n-Los videos de la television fueron eliminados\n-RECORDA QUE LA PAGINA OFICIAL DEL PROYECTO ES OPTIJUEGOS.NET!!",
+  "changes": "The game size was reduced from 15.3GB to 13.8GB\n- The crack was updated and improved\n- Multiple textures were compressed and optimized\n- A verification check was added when launching the game\n- TV videos were removed\n- REMEMBER THAT THE OFFICIAL PROJECT WEBSITE IS OPTIJUEGOS.NET!!"
 }
 
